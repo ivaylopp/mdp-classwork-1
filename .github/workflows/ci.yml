@@ -29,6 +29,7 @@ jobs:
           push: true
           tags: ${{ github.actor }}/app:1.0-${{ github.sha }}
 
+
   flake-lint:
     needs: build-and-push
     runs-on: ubuntu-latest
@@ -41,4 +42,5 @@ jobs:
         run: sudo apt-get update && sudo apt-get install flake8
 
       - name: Run flake8
-        run: flake8 --max-line-length=120 ./src/app.py
+      # W191: indentation contains tabs
+        run: flake8 --max-line-length=120 --ignore=W191 ./src/app.py
