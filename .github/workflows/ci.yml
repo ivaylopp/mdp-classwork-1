@@ -30,7 +30,7 @@ jobs:
           tags: ${{ github.actor }}/app:1.0-${{ github.sha }}
 
 
-  flake-lint:
+  flake8-linter:
     needs: build-and-push
     runs-on: ubuntu-latest
   
@@ -44,3 +44,18 @@ jobs:
       - name: Run flake8
       # W191: indentation contains tabs
         run: flake8 --max-line-length=120 --ignore=W191 ./src/app.py
+
+
+  editorconfig-checker:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Load editorconfig-checker
+        uses: editorconfig-checker/action-editorconfig-checker@main
+
+      - name: Run editorconfig-checker
+        run: editorconfig-checker
