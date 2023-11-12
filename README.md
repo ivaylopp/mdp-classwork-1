@@ -10,3 +10,4 @@ A sample python project with a GitHub Actions pipeline.
   - flake8
   - editorconfig-checker
   - markdownlint
+- Check for leaked secrets with GitLeaks
