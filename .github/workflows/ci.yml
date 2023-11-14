@@ -82,7 +82,8 @@ jobs:
 
 
   build:
-    runs-on: [flake8, editorconfig-checker, markdownlint, gitleaks, unit-tests]
+    needs: [flake8, editorconfig-checker, markdownlint, gitleaks, unit-tests]
+    runs-on: ubuntu-latest
     permissions:
       packages: write
       
