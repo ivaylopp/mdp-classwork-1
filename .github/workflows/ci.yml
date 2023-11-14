@@ -66,11 +66,14 @@ jobs:
 
 
   unit-tests:
-    runs-on: python-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
+
+      - name: Install Python
+        run: sudo apt-get update && sudo apt-get install python3
 
       - name: Run tests
         run: python3 -m unittest discover -s ./src/tests -p '*_test.py'
