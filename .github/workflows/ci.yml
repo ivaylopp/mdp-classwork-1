@@ -13,39 +13,17 @@ env:
   DOCKER_IMAGE_TAG: ghcr.io/${{ github.repository_owner }}/app:1.0-${{ github.sha }}
 
 jobs:
-  build:
-    runs-on: ubuntu-latest 
-    permissions:
-      packages: write
-      
-    steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v3
-
-      - name: Build the Docker image
-        run: docker build -t ${{ env.DOCKER_IMAGE_TAG }} -f Dockerfile-alpine .
-
-      - name: Log in to the GitHub Container Registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
-
-      - name: Push the Docker image
-        run: docker push ${{ env.DOCKER_IMAGE_TAG }}
-
-
-  flake8:
+  gitleaks:
     needs: build
     runs-on: ubuntu-latest
-  
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-      - name: Install flake8
-        run: sudo apt-get update && sudo apt-get install flake8
-
-      - name: Run flake8
-      # W191: indentation contains tabs
-        run: flake8 --max-line-length=120 --ignore=W191 ./src/app.py
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
   editorconfig-checker:
@@ -75,6 +53,53 @@ jobs:
         uses: articulate/actions-markdownlint@v1
 
 
+  flake8:
+    needs: build
+    runs-on: ubuntu-latest
+  
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Install flake8
+        run: sudo apt-get update && sudo apt-get install flake8
+
+      - name: Run flake8
+      # W191: indentation contains tabs
+        run: flake8 --max-line-length=120 --ignore=W191 ./src/app.py
+
+
+  unit-tests:
+    needs: build
+    runs-on: python-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Run tests
+        run: python3 -m unittest discover -s ./src/tests -p '*_test.py'
+
+
+  build:
+    runs-on: [flake8, editorconfig-checker, markdownlint, gitleaks, unit-tests]
+    permissions:
+      packages: write
+      
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Build the Docker image
+        run: docker build -t ${{ env.DOCKER_IMAGE_TAG }} -f Dockerfile-alpine .
+
+      - name: Log in to the GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+
+      - name: Push the Docker image
+        run: docker push ${{ env.DOCKER_IMAGE_TAG }}
+
+
   trivy:
     needs: build
     runs-on: ubuntu-latest
@@ -92,33 +117,8 @@ jobs:
           severity: CRITICAL
 
 
-  gitleaks:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-
-  test:
-    needs: build
-    runs-on: python-latest
-
-    steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v3
-
-      - name: Run tests
-        run: python3 -m unittest discover -s ./src/tests -p '*_test.py'
-
-
   upload-image:
-    needs: [build, flake8, editorconfig-checker, markdownlint, trivy, gitleaks, test]
+    needs: trivy
     runs-on: ubuntu-latest
 
     steps:
