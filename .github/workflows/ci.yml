@@ -87,7 +87,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       packages: write
-      
+
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
@@ -124,6 +124,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
