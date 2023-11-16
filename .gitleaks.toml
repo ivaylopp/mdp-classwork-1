@@ -1,4 +1,4 @@
 [rules.allowlist]
 paths = [
-  '''sonar-project.properties'''
+  '''testdontignoresonar-project.properties'''
 ]
