@@ -1,3 +1,6 @@
+[extend]
+useDefault = true
+
 [rules.allowlist]
 paths = [
   '''testdontignoresonar-project.properties'''
