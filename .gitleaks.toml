@@ -5,3 +5,7 @@ useDefault = true
 paths = [
   '''sonar-project.properties'''
 ]
+regexTarget = "line"
+regexes = [
+  '''sonar.projectKey''',
+]
