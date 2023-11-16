@@ -123,9 +123,11 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout the repository
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
@@ -134,7 +136,7 @@ jobs:
 
 
   upload-image:
-    needs: trivy
+    needs: [sonarcloud, trivy]
     runs-on: ubuntu-latest
 
     steps:
