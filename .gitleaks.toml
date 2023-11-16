@@ -1,0 +1,4 @@
+[rules.allowlist]
+paths = [
+  '''sonar-project.properties'''
+]
