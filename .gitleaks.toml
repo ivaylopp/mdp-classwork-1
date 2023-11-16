@@ -1,11 +1,8 @@
 [extend]
 useDefault = true
 
-[rules.allowlist]
+[allowlist]
+description = "Allowlist for SonarQube project keys"
 paths = [
   '''sonar-project.properties'''
-]
-regexTarget = "line"
-regexes = [
-  '''sonar.projectKey''',
 ]
