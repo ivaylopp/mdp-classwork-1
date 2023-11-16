@@ -119,8 +119,24 @@ jobs:
           severity: CRITICAL
 
 
+  sonarcloud:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+
   upload-image:
-    needs: trivy
+    needs: [sonarcloud, trivy]
     runs-on: ubuntu-latest
 
     steps:
