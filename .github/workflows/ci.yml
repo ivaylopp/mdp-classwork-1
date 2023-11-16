@@ -135,8 +135,24 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
 
+  snyk:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repositoryg
+        uses: actions/checkout@v3
+
+      - name: Run Snyk
+        working-directory: ${{github.workspace}}/src
+        run: |
+          pip install -r requirements.txt
+          npm install -g snyk
+          snyk auth ${{ secrets.SNYK_TOKEN }}
+          snyk test
+
+
   upload-image:
-    needs: [sonarcloud, trivy]
+    needs: [sonarcloud, trivy, snyk]
     runs-on: ubuntu-latest
 
     steps:
