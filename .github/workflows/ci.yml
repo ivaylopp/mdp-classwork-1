@@ -156,11 +156,9 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Start a PostgreSQL database
-        run: >
-          docker run -d --rm --name postgres \
-          -e POSTGRES_PASSWORD=postgres \
-          -e POSTGRES_USER=postgres \
-          -e POSTGRES_DB=postgres \
+        run: |
+          docker run -d --rm \
+          -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres  -e POSTGRES_DB=postgres \
           -p 5432:5432 \
           postgres:13-alpine
 
