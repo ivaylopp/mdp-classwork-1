@@ -150,25 +150,24 @@ jobs:
   flyway:
     needs: build
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_DB: db
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
 
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
 
-      - name: Start a PostgreSQL database
-        run: |
-          docker run -d --rm \
-          -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres  -e POSTGRES_DB=postgres \
-          -p 5432:5432 \
-          postgres:13-alpine
-
-      - name: Run Flyway migrate
-        run: |
-          docker run --rm -v ./src/migrations:/flyway/sql flyway/flyway \
-          -connectRetries=4 \
-          -user=postgres -password=postgres \
-          -url=jdbc:postgresql://localhost:5432/postgres \
-          migrate
+      - uses: joshuaavalon/flyway-action@v3.0.0
+        with:
+          url: jdbc:postgresql://postgres:5432/db
+          user: user
+          password: password
+          locations: filesystem:src/migrations
 
 
   upload-image:
