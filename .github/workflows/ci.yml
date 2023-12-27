@@ -163,7 +163,7 @@ jobs:
           postgres:13-alpine
 
       - name: Run Flyway migrate
-        run: >
+        run: |
           docker run --rm -v ./src/migrations:/flyway/sql flyway/flyway \
           -user=postgres -password=postgres \
           -url=jdbc:postgresql://localhost:5432/postgres \
