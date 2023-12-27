@@ -15,6 +15,7 @@ env:
 jobs:
   gitleaks:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
         with:
@@ -122,6 +123,7 @@ jobs:
   sonarcloud:
     needs: build
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
@@ -138,6 +140,7 @@ jobs:
   snyk:
     needs: build
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout the repositoryg
         uses: actions/checkout@v3
@@ -149,6 +152,31 @@ jobs:
           npm install -g snyk
           snyk auth ${{ secrets.SNYK_TOKEN }}
           snyk test
+
+
+  flyway:
+    needs: build
+    runs-on: ubuntu-latest
+    # postgres container
+    container:
+      image: postgres:13.2-alpine
+      ports:
+        - 5432:5432
+      env:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+        POSTGRES_DB: postgres
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Run Flyway
+        run: >
+          docker run --rm -v ./src/migrations:/flyway/sql flyway/flyway \
+          -user=postgres -password=postgres \
+          -url=jdbc:postgresql://localhost:5432/postgres \
+          migrate
 
 
   upload-image:
