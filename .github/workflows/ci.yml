@@ -150,21 +150,22 @@ jobs:
   flyway:
     needs: build
     runs-on: ubuntu-latest
-    # postgres container
-    container:
-      image: postgres:13.2-alpine
-      ports:
-        - 5432:5432
-      env:
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgres
-        POSTGRES_DB: postgres
 
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
 
-      - name: Run Flyway
+      - name: Start a PostgreSQL database
+        uses: docker://postgres:13.2-alpine
+        with:
+          env:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: postgres
+          ports:
+            - 5432:5432
+
+      - name: Run Flyway migrate
         run: >
           docker run --rm -v ./src/migrations:/flyway/sql flyway/flyway \
           -user=postgres -password=postgres \
