@@ -11,7 +11,7 @@ Open a new issue and explain your suggestion. You should answer the following qu
 - What are some possible drawbacks of the new feature?
 - What is the estimated cost of implementing the feature?
 
-**Pull requests for features will not be considered if they have not been evaluated and approved beforehand**
+**Pull requests will only be accepted for features that have been evaluated and approved beforehand**
 
 ## Reporting a bug
 
@@ -19,4 +19,4 @@ Open a new issue containing an explanation of the issue and the steps to reprodu
 
 ## Contributing
 
-Open a PR containing a link to the respective feature issue.
+Open a PR containing a link to the respective issue (feature request or bug report).

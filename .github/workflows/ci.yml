@@ -1,20 +1,14 @@
 name: CI
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-  # Allows running this workflow manually from the Actions tab
-  workflow_dispatch:
+on: push
 
 env:
-  DOCKER_IMAGE_TAG: ghcr.io/${{ github.repository_owner }}/app:1.0-${{ github.sha }}
+  DOCKER_IMAGE_TAG: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:${{ github.ref_name }}-${{ github.sha }}
 
 jobs:
   gitleaks:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
         with:
@@ -122,6 +116,7 @@ jobs:
   sonarcloud:
     needs: build
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
@@ -138,6 +133,7 @@ jobs:
   snyk:
     needs: build
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout the repositoryg
         uses: actions/checkout@v3
@@ -151,8 +147,31 @@ jobs:
           snyk test
 
 
+  flyway:
+    needs: build
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_DB: db
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - uses: joshuaavalon/flyway-action@v3.0.0
+        with:
+          url: jdbc:postgresql://postgres:5432/db
+          user: user
+          password: password
+          locations: filesystem:src/migrations
+
+
   upload-image:
-    needs: [sonarcloud, trivy, snyk]
+    needs: [sonarcloud, trivy, snyk, flyway]
     runs-on: ubuntu-latest
 
     steps:
