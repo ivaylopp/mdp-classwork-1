@@ -8,3 +8,5 @@ env:
 jobs:
   call-workflow:
     uses: ivaylopp/mdp-classwork-ci/.github/workflows/ci.yml@main
+    permissions:
+      packages: write
