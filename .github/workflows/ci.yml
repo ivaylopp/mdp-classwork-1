@@ -178,6 +178,9 @@ jobs:
       - name: Pull from GitHub Container Registry
         run: docker pull ghcr.io/${{ env.DOCKER_IMAGE_NAME_AND_TAG }}
 
+      - name: Re-tag image for Dockerhub
+        run: docker tag ghcr.io/${{ env.DOCKER_IMAGE_NAME_AND_TAG }} ${{ env.DOCKER_IMAGE_NAME_AND_TAG }}
+
       - name: Log in to dockerhub
         run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u ${{ github.repository_owner }} --password-stdin
 
