@@ -7,7 +7,7 @@ env:
 
 jobs:
   call-workflow:
-    uses: ivaylopp/mdp-classwork-ci/.github/workflows/ci.yml@main
+    uses: ivaylopp/mdp-classwork-ci/.github/workflows/ci.yml@0.0.1
     permissions:
       packages: write
     secrets: inherit
