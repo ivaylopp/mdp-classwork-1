@@ -10,3 +10,4 @@ jobs:
     uses: ivaylopp/mdp-classwork-ci/.github/workflows/ci.yml@main
     permissions:
       packages: write
+    secrets: inherit
