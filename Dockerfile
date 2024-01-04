@@ -1,7 +1,9 @@
-FROM openjdk:17-jdk-alpine
+FROM maven:amazoncorretto AS build
 
-RUN mvn clean packagegst
+RUN mvn clean package
 
-COPY target/application.jar /
+FROM amazoncorretto:17-alpine-jdk
+
+COPY --from=build target/application.jar /
 
 ENTRYPOINT exec java "$JAVA_OPTIONS" -jar /application.jar
