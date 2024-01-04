@@ -1,9 +1,7 @@
-FROM ubuntu:latest
+FROM openjdk:17-jdk-alpine
 
-RUN apt-get update && apt-get install -y python3-pip
+RUN mvn clean packagegst
 
-COPY ./src /home/src
+COPY target/application.jar /
 
-RUN pip3 install --no-cache-dir -r /home/src/requirements.txt --break-system-packages
-
-CMD ["python3", "/home/src/app.py"]
+ENTRYPOINT exec java "$JAVA_OPTIONS" -jar /application.jar
