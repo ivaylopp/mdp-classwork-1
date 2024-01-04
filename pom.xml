@@ -11,10 +11,10 @@
 	</parent>
 
 	<groupId>com.test</groupId>
-	<artifactId>project-spring</artifactId>
+	<artifactId>example-project</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>project-spring</name>
-	<description>test project spring</description>
+	<name>example-project</name>
+	<description>Example Java Project with Spring</description>
 
 	<properties>
 		<java.version>17</java.version>

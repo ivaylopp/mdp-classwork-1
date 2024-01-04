@@ -9,6 +9,6 @@ RUN mvn clean package
 
 FROM amazoncorretto:17-alpine-jdk
 
-COPY --from=build /project/target/application.jar /
+COPY --from=build /project/target/example-project-0.0.1-SNAPSHOT.jar /
 
-ENTRYPOINT exec java "$JAVA_OPTIONS" -jar /application.jar
+ENTRYPOINT exec java "$JAVA_OPTIONS" -jar /example-project-0.0.1-SNAPSHOT.jar
