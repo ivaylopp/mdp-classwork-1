@@ -12,4 +12,5 @@ jobs:
       packages: write
     secrets: inherit
     with:
-      language: java-17
+      language: java
+      java-version: 17
