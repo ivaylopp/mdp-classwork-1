@@ -11,5 +11,5 @@ jobs:
     permissions:
       packages: write
     secrets: inherit
-    inputs:
+    with:
       language: java-17
