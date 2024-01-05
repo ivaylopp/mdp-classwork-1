@@ -1,4 +1,4 @@
-FROM ghcr.io/graalvm/native-image-community:17-muslib-ol8 AS build
+FROM container-registry.oracle.com/graalvm/native-image:17-ol8 AS build
 
 WORKDIR /app
 COPY . /app
