@@ -2,7 +2,7 @@ FROM maven:3.9.6-amazoncorretto-17@sha256:854067018253a2162372ea79d336541e6800c1
 
 WORKDIR /project
 COPY . /project
-RUN mvn clean package
+RUN mvn -Pnative native:compile
 
 
 FROM amazoncorretto:17-alpine-jre@sha256:ed14b8c2f00dbb7b94446aa01d00583976ff0eda2577f5474035f3b4cf078dfd
