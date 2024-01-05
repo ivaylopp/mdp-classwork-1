@@ -7,6 +7,5 @@ RUN ./mvnw -Pnative native:compile --no-transfer-progress
 
 FROM scratch
 
-COPY --from=build /app/target/example-project-0.0.1-SNAPSHOT /spring-boot-application
-
+COPY --from=build /app/target/example-project /spring-boot-application
 ENTRYPOINT ["/spring-boot-application"]
