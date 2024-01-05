@@ -1,13 +1,12 @@
 name: CI
 
-on: push
-
-env:
-  DOCKER_IMAGE_NAME_AND_TAG: ${{ github.repository_owner }}/${{ github.event.repository.name }}:${{ github.ref_name }}-${{ github.sha }}
+on: 
+  push:
+  workflow_dispatch:
 
 jobs:
   call-workflow:
-    uses: ivaylopp/mdp-classwork-ci/.github/workflows/ci.yml@0.0.1
+    uses: ivaylopp/mdp-classwork-ci/.github/workflows/ci.yml@python-ci
     permissions:
       packages: write
     secrets: inherit
