@@ -1,4 +1,4 @@
-FROM maven:3.9.6-amazoncorretto-17@sha256:854067018253a2162372ea79d336541e6800c1b3deba68d7855a0c39ee6852d0 AS build
+FROM ghcr.io/graalvm/jdk-community:21.0.1-ol7-20231024@sha256:32280e9cb6e4dd0283f9079385d40d0bce9775074c44ba16db7a87de23dc5327 AS build
 
 WORKDIR /project
 COPY . /project
