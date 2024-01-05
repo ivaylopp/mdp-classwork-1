@@ -1,4 +1,4 @@
-FROM ghcr.io/graalvm/jdk-community:21.0.1-ol7-20231024@sha256:32280e9cb6e4dd0283f9079385d40d0bce9775074c44ba16db7a87de23dc5327 AS build
+FROM ghcr.io/graalvm/native-image-community:21.0.1-muslib-ol8-20231024 AS build
 
 WORKDIR /app
 COPY . /app
