@@ -1,4 +1,4 @@
-FROM ghcr.io/graalvm/native-image-community:21.0.1-muslib-ol8-20231024 AS build
+FROM ghcr.io/graalvm/native-image-community:17-muslib-ol8 AS build
 
 WORKDIR /app
 COPY . /app
