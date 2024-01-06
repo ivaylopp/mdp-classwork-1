@@ -2,7 +2,7 @@
 FROM container-registry.oracle.com/graalvm/native-image:17-ol8 AS build
 
 WORKDIR /app
-COPY pom.xml /app
+COPY ./mvnw ./.mvn pom.xml /app
 RUN ./mvnw dependency:resolve
 
 COPY . /app
