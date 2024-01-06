@@ -3,7 +3,7 @@ FROM container-registry.oracle.com/graalvm/native-image:17-ol8 AS build
 
 WORKDIR /app
 COPY pom.xml /app
-RUN mvn dependency:resolve
+RUN ./mvnw dependency:resolve
 
 COPY . /app
 RUN ./mvnw -Pnative native:compile --no-transfer-progress
