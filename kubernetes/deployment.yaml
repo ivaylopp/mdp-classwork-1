@@ -4,7 +4,7 @@ metadata:
   labels:
     app: python-app
   name: python-app
-  namespace: default
+  namespace: ns1
 spec:
   replicas: 1
   selector:
