@@ -6,7 +6,7 @@ on:
 
 jobs:
   call-workflow:
-    uses: ivaylopp/mdp-classwork-ci/.github/workflows/ci.yml@java-ci
+    uses: ivaylopp/mdp-classwork-ci/.github/workflows/ci.yml@java-1.0.0
     permissions:
       packages: write
     secrets: inherit
