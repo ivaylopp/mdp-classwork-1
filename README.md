@@ -1,15 +1,3 @@
-# Classwork Assignment
+# Overview
 
-A sample python project with a GitHub Actions pipeline.
-
-## Pipeline Features
-
-- Dockerize and push to dockerhub
-- Unit tests
-- Run various linters:
-  - flake8
-  - editorconfig-checker
-  - markdownlint
-- Check for leaked secrets with GitLeaks
-- Vulnerability scanning of the docker image with Trivy
-- SonarCloud code quality check
+A sample python project which uses the [mdp-classwork-ci](https://github.com/ivaylopp/mdp-classwork-ci) GitHub Actions workflow. See the readme of that project for more info.
