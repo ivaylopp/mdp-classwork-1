@@ -1,15 +1,5 @@
-# Classwork Assignment
+# Overview
 
-A sample python project with a GitHub Actions pipeline.
+A sample java project which uses the [mdp-classwork-ci](https://github.com/ivaylopp/mdp-classwork-ci) GitHub Actions workflow. See the readme of that project for more info.
 
-## Pipeline Features
-
-- Dockerize and push to dockerhub
-- Unit tests
-- Run various linters:
-  - flake8
-  - editorconfig-checker
-  - markdownlint
-- Check for leaked secrets with GitLeaks
-- Vulnerability scanning of the docker image with Trivy
-- SonarCloud code quality check
+This project compiles into a native GraalVM binary.
